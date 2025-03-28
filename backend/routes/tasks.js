@@ -37,7 +37,10 @@ const Task = require("../models/Task");
 
 router.get("/", async (request, response) => {
   try {
-    const tasks = await Task.find();
+    const { page = 1, limit = 10 } = request.query;
+    const tasks = await Task.find()
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     response.json(tasks);
   } catch (error) {
@@ -63,7 +66,6 @@ router.get("/:id", async (request, response) => {
 
 router.post("/", async (request, response) => {
   try {
-    a;
     const { title, description } = request.body;
 
     const newTask = new Task({ title, description });
