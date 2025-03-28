@@ -6,13 +6,7 @@ const cors = require("cors");
 
 const app = express();
 
-const corsOptions = {
-  origin: "https://next-fullstack-task-manager.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Middleware
 app.use(express.json());
