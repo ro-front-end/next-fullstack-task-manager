@@ -6,7 +6,13 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: "https://next-fullstack-task-manager.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(express.json());
@@ -27,7 +33,7 @@ mongoose
     console.error("Error connecting to MongoDB", error.message);
   });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
   console.log(`Servidor Express corriendo en el puerto ${PORT}`);
