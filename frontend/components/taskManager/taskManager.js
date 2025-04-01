@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getTasks, deleteTask, updateTask } from "@/frontend/services/tasks"; // Asegúrate de que la ruta es correcta
 import { FaPencilAlt, FaTimes } from "react-icons/fa";
+import { TaskContext } from "@/context/taskContext";
 
 const buttons = [
   {
@@ -22,22 +23,22 @@ const buttons = [
 ];
 
 function TaskManager() {
-  const [tasks, setTasks] = useState([]);
-  const [editedTask, setEditedTask] = useState(null); // Para controlar la tarea que se está editando
-  const [taskData, setTaskData] = useState({ title: "", description: "" }); // Para los valores del formulario de edición
+  const { tasks } = useContext(TaskContext);
+  const [editedTask, setEditedTask] = useState(null);
+  const [taskData, setTaskData] = useState({ title: "", description: "" });
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const tasksFromApi = await getTasks();
-        setTasks(tasksFromApi);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchTasks = async () => {
+  //     try {
+  //       const tasksFromApi = await getTasks();
+  //       setTasks(tasksFromApi);
+  //     } catch (error) {
+  //       console.error("Error fetching tasks:", error);
+  //     }
+  //   };
 
-    fetchTasks();
-  }, []);
+  //   fetchTasks();
+  // }, []);
 
   const handleEdit = (task) => {
     setEditedTask(task);

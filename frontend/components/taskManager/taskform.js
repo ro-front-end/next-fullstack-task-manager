@@ -1,18 +1,23 @@
 "use client";
 
-import { createTask } from "@/frontend/services/tasks";
+import { TaskContext } from "@/context/taskContext";
+import { createTask, getTasks } from "@/frontend/services/tasks";
 import {
   initialValues,
   validationSchema,
 } from "@/frontend/validation/createTaskValidation";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 function Taskform() {
+  const { addTask } = useContext(TaskContext);
+
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      await createTask(values);
+      const newTask = await createTask(values);
       alert("Task added successfully!");
+
+      addTask(newTask);
 
       resetForm();
     } catch (error) {
