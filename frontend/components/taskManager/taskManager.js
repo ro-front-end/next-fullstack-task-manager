@@ -23,7 +23,7 @@ const buttons = [
 ];
 
 function TaskManager() {
-  const { tasks } = useContext(TaskContext);
+  const { tasks, deleteTask, updateTask } = useContext(TaskContext);
   const [editedTask, setEditedTask] = useState(null);
   const [taskData, setTaskData] = useState({ title: "", description: "" });
 
@@ -54,13 +54,9 @@ function TaskManager() {
     }
 
     try {
-      const updatedTask = await updateTask(editedTask._id, taskData);
-      setTasks((prevTasks) =>
-        prevTasks.map((task) =>
-          task._id === updatedTask._id ? updatedTask : task
-        )
-      );
+      await updateTask(editedTask._id, taskData);
       setEditedTask(null);
+
       alert("Task updated successfully");
     } catch (error) {
       alert("Error updating task");
@@ -70,7 +66,6 @@ function TaskManager() {
   const handleDelete = async (id) => {
     try {
       await deleteTask(id);
-      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
       alert("Task deleted successfully");
     } catch (error) {
       alert("Error deleting task.");
